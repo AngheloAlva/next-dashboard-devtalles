@@ -1,5 +1,12 @@
-import { PokemonsResponse, SimplePokemon } from "@/pokemons"
 import PokemonGrid from "@/pokemons/components/PokemonGrid"
+
+import type { PokemonsResponse, SimplePokemon } from "@/pokemons"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+	title: "Pokemon List",
+	description: "List of all pokemons",
+}
 
 const getPokemons = async (limit = 20, offset = 0): Promise<SimplePokemon[]> => {
 	const data: PokemonsResponse = await fetch(

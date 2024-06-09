@@ -1,20 +1,26 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
 
-import type { Pokemon } from "@/pokemons"
+import type { Pokemon, PokemonsResponse } from "@/pokemons"
 import type { Metadata } from "next"
 
 export async function generateStaticParams() {
-	const static151Pokemons = Array.from({ length: 151 }).map((v, i) => `${i + 1}`)
+	const data: PokemonsResponse = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151").then(
+		(res) => res.json()
+	)
 
-	return static151Pokemons.map((id) => ({
-		id: id,
+	const static151Pokemons = data.results.map((pokemon) => ({
+		name: pokemon.name,
+	}))
+
+	return static151Pokemons.map(({ name }) => ({
+		name: name,
 	}))
 }
 
 export async function generateMetadata({ params }: PokemonPageProps): Promise<Metadata> {
 	try {
-		const { id, name } = await getPokemon(params.id)
+		const { id, name } = await getPokemon(params.name)
 
 		return {
 			title: `#${id} ${name}`,
@@ -28,11 +34,11 @@ export async function generateMetadata({ params }: PokemonPageProps): Promise<Me
 	}
 }
 
-const getPokemon = async (id: string): Promise<Pokemon> => {
+const getPokemon = async (name: string): Promise<Pokemon> => {
 	try {
-		const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-			// cache: "force-cache",
-		}).then((res) => res.json())
+		const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then((res) =>
+			res.json()
+		)
 
 		return pokemon
 	} catch (error) {
@@ -43,7 +49,7 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
 export default async function PokemonPage({
 	params,
 }: PokemonPageProps): Promise<React.ReactElement> {
-	const pokemon = await getPokemon(params.id)
+	const pokemon = await getPokemon(params.name)
 
 	return (
 		<div className="mt-5 flex flex-col items-center text-slate-800">
@@ -131,5 +137,5 @@ export default async function PokemonPage({
 }
 
 interface PokemonPageProps {
-	params: { id: string }
+	params: { name: string }
 }

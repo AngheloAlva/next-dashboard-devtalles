@@ -1,7 +1,8 @@
 import Link from "next/link"
-import type { SimplePokemon } from "../interfaces/simple-pokemon"
 import Image from "next/image"
 import { IoHeartOutline } from "react-icons/io5"
+
+import type { SimplePokemon } from "../interfaces/simple-pokemon"
 
 export default function PokemonCard({ pokemon }: PokemonCardProps): React.ReactElement {
 	const { id, name } = pokemon
@@ -22,7 +23,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps): React.ReactE
 					<p className="pt-2 text-lg font-semibold capitalize text-gray-50">{name}</p>
 					<div className="mt-5">
 						<Link
-							href={`/dashboard/pokemon/${id}`}
+							href={`/dashboard/pokemons/${name}`}
 							className="rounded-full border px-4 py-2 text-xs font-semibold text-gray-100"
 						>
 							More info
