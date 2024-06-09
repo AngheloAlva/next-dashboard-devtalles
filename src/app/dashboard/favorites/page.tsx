@@ -4,8 +4,8 @@ import type { PokemonsResponse, SimplePokemon } from "@/pokemons"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-	title: "Pokemon List",
-	description: "List of all pokemons",
+	title: "Favorites Pokemon List",
+	description: "List of favorites pokemons",
 }
 
 const getPokemons = async (limit = 20, offset = 0): Promise<SimplePokemon[]> => {
@@ -28,10 +28,10 @@ export default async function PokemonPage(): Promise<React.ReactElement> {
 	return (
 		<div className="flex flex-col">
 			<span className="my-2 text-center text-5xl">
-				Pokemon List <small className="text-blue-500">statict</small>
+				Favorites Pokemon <small className="text-blue-500">global state</small>
 			</span>
 
-			<PokemonGrid pokemons={pokemons} />
+			<PokemonGrid pokemons={[]} />
 		</div>
 	)
 }
