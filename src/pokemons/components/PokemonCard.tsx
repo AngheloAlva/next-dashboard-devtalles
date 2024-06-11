@@ -1,11 +1,22 @@
-import Link from "next/link"
+"use client"
+
+import { IoHeart, IoHeartOutline } from "react-icons/io5"
+import { useAppDispatch, useAppSelector } from "@/store"
 import Image from "next/image"
-import { IoHeartOutline } from "react-icons/io5"
+import Link from "next/link"
 
 import type { SimplePokemon } from "../interfaces/simple-pokemon"
+import { toggleFavorite } from "@/store/pokemons/pokemons"
 
 export default function PokemonCard({ pokemon }: PokemonCardProps): React.ReactElement {
 	const { id, name } = pokemon
+
+	const isFavorite = useAppSelector((state) => !!state.pokemons.favorites[id])
+	const dispatch = useAppDispatch()
+
+	const onToggle = () => {
+		dispatch(toggleFavorite(pokemon))
+	}
 
 	return (
 		<div className="right-0 mx-auto mt-2 w-60">
@@ -31,15 +42,18 @@ export default function PokemonCard({ pokemon }: PokemonCardProps): React.ReactE
 					</div>
 				</div>
 				<div className="border-b">
-					<div className="flex items-center px-4 py-2 hover:bg-gray-100">
-						<div className="text-red-600">
-							<IoHeartOutline />
-						</div>
+					<button
+						onClick={onToggle}
+						className="flex w-full items-center px-4 py-2 hover:bg-gray-100"
+					>
+						<div className="text-red-600">{isFavorite ? <IoHeart /> : <IoHeartOutline />}</div>
 						<div className="pl-3">
-							<p className="text-sm font-medium leading-none text-gray-800">Not favorited</p>
+							<p className="text-sm font-medium leading-none text-gray-800">
+								{isFavorite ? "Is favorite" : "Not favorite"}
+							</p>
 							<p className="text-xs text-gray-500">View your campaigns</p>
 						</div>
-					</div>
+					</button>
 				</div>
 			</div>
 		</div>

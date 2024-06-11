@@ -1,4 +1,3 @@
-import Image from "next/image"
 import type { SimplePokemon } from "../interfaces/simple-pokemon"
 import PokemonCard from "./PokemonCard"
 

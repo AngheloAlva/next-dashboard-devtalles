@@ -1,6 +1,4 @@
-import PokemonGrid from "@/pokemons/components/PokemonGrid"
-
-import type { PokemonsResponse, SimplePokemon } from "@/pokemons"
+import { FavoritePokemons, type PokemonsResponse, type SimplePokemon } from "@/pokemons"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -31,7 +29,7 @@ export default async function PokemonPage(): Promise<React.ReactElement> {
 				Favorites Pokemon <small className="text-blue-500">global state</small>
 			</span>
 
-			<PokemonGrid pokemons={[]} />
+			<FavoritePokemons />
 		</div>
 	)
 }
